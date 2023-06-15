@@ -1,40 +1,147 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Simple Website</title>
+    <title>Maxx's Landing Page</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Ubuntu|Roboto+Mono&display=swap');
+
+        :root {
+            --background-color-top: #b5c9f5;
+            --background-color-bottom: #dccbf0;
+        }
+        
         body {
-            background: linear-gradient(to bottom, #c3cfe2, #e4e5e6);
+            background: linear-gradient(to bottom, var(--background-color-top), var(--background-color-bottom));
         }
         
         .container {
+            position: relative;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
             text-align: center;
+            font-family: 'Ubuntu', monospace;
         }
         
         h1 {
             font-size: 32px;
+            font-weight: bold;
+            margin: 10px 0;
         }
         
         h2 {
             font-size: 24px;
+            margin: 5px 0;
         }
         
         p {
             font-size: 18px;
+            margin: 3px 0;
         }
+        
+        .moving-text {
+            animation: moveText 4s linear infinite;
+        }
+        
+        @keyframes moveText {
+            0% {
+                transform: translateX(-80%);
+            }
+            100% {
+                transform: translateX(80%);
+            }
+        }
+        
+    .box {
+        position: absolute;
+        top: 30%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100px;
+        height: 100px;
+        #background-color: #ffffff;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .box img {
+        max-width: 150%;
+        max-height: 150%;
+    }
+    .box span {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 18px;
+        font-weight: bold;
+        color: #000000;
+        text-align: center;
+        z-index: 2;
+    }
     </style>
+    <script>
+        function getRandomPosition() {
+            var container = document.querySelector('.container');
+            var box = document.querySelector('.box');
+            var containerRect = container.getBoundingClientRect();
+            var boxRect = box.getBoundingClientRect();
+            var containerWidth = containerRect.width;
+            var containerHeight = containerRect.height;
+            var boxWidth = boxRect.width;
+            var boxHeight = boxRect.height;
+            var textElements = document.querySelectorAll('.container > *:not(.box)');
+            var isOverlapping = false;
+        
+            do {
+                var randomX = Math.floor(Math.random() * (containerWidth - boxWidth));
+                var randomY = Math.floor(Math.random() * (containerHeight - boxHeight));
+                isOverlapping = false;
+        
+                for (var i = 0; i < textElements.length; i++) {
+                    var textRect = textElements[i].getBoundingClientRect();
+                    var textWidth = textRect.width;
+                    var textHeight = textRect.height;
+        
+                    if (
+                        randomX + boxWidth > textRect.left &&
+                        randomX < textRect.left + textWidth &&
+                        randomY + boxHeight > textRect.top &&
+                        randomY < textRect.top + textHeight
+                    ) {
+                        isOverlapping = true;
+                        break;
+                    }
+                }
+            } while (isOverlapping);
+        
+            return { x: randomX, y: randomY };
+        }
+        
+        function moveBox() {
+            var box = document.querySelector('.box');
+            var newPosition = getRandomPosition();
+        
+            box.style.top = newPosition.y + 'px';
+            box.style.left = newPosition.x + 'px';
+        }
+    </script>
 </head>
 <body>
     <div class="container">
-        <h1>Title will be here</h1>
-        <h2>Description will be here</h2>
-        <p><a href="https://github.com">webpage</a></p>
+		<h1 class="moving-text">Welcome to mobil lengends</h1>
+        <h1>Welcome to Maxx's Website</h1>
+        <h2>This is still a WIP, please do not stay tuned, i am learning css/html and do not have a completion ETA :)</h2>
+        <p><a href="https://github.com">Dummy link</a></p>
         <!-- Additional texts here -->
+		<h1 class="moving-text">Welcome to mobil lengends</h1>
+<div class="box" onclick="moveBox()">
+    <img src="https://www.freepnglogos.com/uploads/target-png/target-logo-png-transparent-svg-vector-bie-supply-35.png" alt="Target Logo">
+    <span>Click me!</span>
+</div>
     </div>
 </body>
 </html>
