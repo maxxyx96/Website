@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
 <head>
     <title>Maxx's Landing Page</title>
@@ -136,12 +136,68 @@
         <h1>Welcome to Maxx's Website</h1>
         <h2>This is still a WIP, please do not stay tuned, i am learning css/html and do not have a completion ETA :)</h2>
         <p><a href="https://github.com">Dummy link</a></p>
-        <!-- Additional texts here -->
+        
 		<h1 class="moving-text">Welcome to mobil lengends</h1>
 <div class="box" onclick="moveBox()">
     <img src="https://www.freepnglogos.com/uploads/target-png/target-logo-png-transparent-svg-vector-bie-supply-35.png" alt="Target Logo">
     <span>Click me!</span>
 </div>
     </div>
+</body>
+</html>
+ -->
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch Wikipedia Content</title>
+    <style>
+        #content-box {
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin: 20px;
+            max-width: 800px;
+            overflow: auto;
+        }
+    </style>
+</head>
+<body>
+
+<div id="content-box">
+    <h1>Content from Wikipedia</h1>
+    <div id="wiki-content">
+        Loading...
+    </div>
+</div>
+
+<script>
+    // URL of the Wikipedia page to fetch content from
+    const wikipediaURL = 'https://attack.mitre.org/software/S0154/';
+
+    // Selecting the element where the content will be displayed
+    const wikiContentElement = document.getElementById('wiki-content');
+
+    // Fetching content from Wikipedia
+    fetch(wikipediaURL)
+        .then(response => {
+            // Check if the request was successful
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            // Parse the response as text
+            return response.text();
+        })
+        .then(data => {
+            // Update the content box with the fetched content
+            wikiContentElement.innerHTML = data;
+        })
+        .catch(error => {
+            // Handle any errors that occurred during the fetch
+            console.error('Error fetching Wikipedia content:', error);
+            wikiContentElement.innerHTML = 'Error fetching content. Please try again later.';
+        });
+</script>
+
 </body>
 </html>
